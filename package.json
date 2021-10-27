@@ -19,7 +19,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "lint": "ts-standard --verbose | snazzy",
+    "lint:fix": "ts-standard --fix --verbose | snazzy",
+    "test": "ts-standard && react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -39,5 +41,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "ts-standard": "^10.0.0",
+    "snazzy": "^9.0.0"
   }
 }
