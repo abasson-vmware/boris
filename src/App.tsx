@@ -1,24 +1,29 @@
-import React from 'react'
-import logo from './logo.svg'
+import React, {ChangeEvent, FormEvent, useState} from 'react'
 import './App.scss'
 
-function App (): React.ReactElement {
+function App(): React.ReactElement {
+  const [serviceName, setServiceName] = useState<string | null>(null)
+  const [displayService, setDisplayService] = useState<boolean>(false)
+
+  const onServiceNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    setServiceName(event.target.value)
+  }
+
+  const onSubmit = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault()
+    setDisplayService(true)
+  }
+
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {
+        displayService ? <h1>{serviceName}</h1> : <></>
+      }
+
+      <form id="new-service-form" onSubmit={onSubmit}>
+        <input type="text" className="service-name" onChange={onServiceNameChange} />
+        <button type="submit">Submit</button>
+      </form>
     </div>
   )
 }
