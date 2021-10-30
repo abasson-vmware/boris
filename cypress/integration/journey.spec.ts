@@ -9,5 +9,14 @@ describe('Creating a Boris diagram', () => {
     cy.get('#new-service-form').submit()
 
     cy.contains('A service')
+
+    cy.get('#new-service-form')
+      .get('.service-name')
+      .type('Another service')
+
+    cy.get('#new-service-form').submit()
+
+    cy.contains('A service')
+    cy.contains('Another service')
   })
 })

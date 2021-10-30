@@ -1,9 +1,13 @@
-import React, {ChangeEvent, FormEvent, useState} from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import './App.scss'
 
-function App(): React.ReactElement {
-  const [serviceName, setServiceName] = useState<string | null>(null)
-  const [displayService, setDisplayService] = useState<boolean>(false)
+interface Service {
+  name: string
+}
+
+function App (): React.ReactElement {
+  const [services, setServices] = useState<Service[]>([])
+  const [serviceName, setServiceName] = useState<string>('')
 
   const onServiceNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setServiceName(event.target.value)
@@ -11,19 +15,28 @@ function App(): React.ReactElement {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault()
-    setDisplayService(true)
+
+    const service: Service = {
+      name: serviceName
+    }
+    setServices([...services, service])
+
+    setServiceName('')
   }
 
   return (
     <div>
-      {
-        displayService ? <h1>{serviceName}</h1> : <></>
-      }
-
-      <form id="new-service-form" onSubmit={onSubmit}>
-        <input type="text" className="service-name" onChange={onServiceNameChange} />
-        <button type="submit">Submit</button>
+      <form id='new-service-form' onSubmit={onSubmit}>
+        <input type='text' className='service-name' value={serviceName} onChange={onServiceNameChange} />
+        <button type='submit'>Submit</button>
       </form>
+
+      <h2>Services</h2>
+      <ul>
+        {
+          services.map((service) => <li key={service.name}>{service.name}</li>)
+        }
+      </ul>
     </div>
   )
 }
